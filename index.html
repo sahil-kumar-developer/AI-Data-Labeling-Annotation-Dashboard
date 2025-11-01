@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Data Labeling & Annotation Demo - Back Office Project</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <script src="load.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Data Labeling & Annotation Dashboard</h1>
+            <p class="subtitle">Demo Project - Back Office Associate for AI Model Training</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalAnnotated">0</div>
+                <div class="stat-label">Total Annotated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="accuracyRate">0%</div>
+                <div class="stat-label">Accuracy Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="avgTime">0s</div>
+                <div class="stat-label">Avg Time/Item</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="qualityScore">0%</div>
+                <div class="stat-label">Quality Score</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="annotation-panel">
+                <h2 style="margin-bottom: var(--space-20); font-size: var(--font-size-2xl);">Data Annotation Interface</h2>
+                
+                <div class="data-item" id="currentItem">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-12);">
+                        <span style="font-weight: 600; color: var(--color-text-secondary);">Item #<span id="itemNumber">1</span></span>
+                        <span class="status-badge status-pending" id="itemStatus">Pending</span>
+                    </div>
+                    
+                    <div class="data-text" id="dataText">
+                        "Just received my order! The product quality exceeded expectations. Shipping was fast and packaging was excellent. Highly recommend this seller!"
+                    </div>
+
+                    <div class="label-section">
+                        <div class="label-group">
+                            <div class="label-title">Sentiment Analysis</div>
+                            <div class="label-options">
+                                <button class="label-btn" data-category="sentiment" data-value="positive">Positive</button>
+                                <button class="label-btn" data-category="sentiment" data-value="neutral">Neutral</button>
+                                <button class="label-btn" data-category="sentiment" data-value="negative">Negative</button>
+                            </div>
+                        </div>
+
+                        <div class="label-group">
+                            <div class="label-title">Content Category</div>
+                            <div class="label-options">
+                                <button class="label-btn" data-category="category" data-value="product_review">Product Review</button>
+                                <button class="label-btn" data-category="category" data-value="customer_service">Customer Service</button>
+                                <button class="label-btn" data-category="category" data-value="shipping_delivery">Shipping/Delivery</button>
+                                <button class="label-btn" data-category="category" data-value="general_feedback">General Feedback</button>
+                            </div>
+                        </div>
+
+                        <div class="label-group">
+                            <div class="label-title">Priority Level</div>
+                            <div class="label-options">
+                                <button class="label-btn" data-category="priority" data-value="high">High</button>
+                                <button class="label-btn" data-category="priority" data-value="medium">Medium</button>
+                                <button class="label-btn" data-category="priority" data-value="low">Low</button>
+                            </div>
+                        </div>
+
+                        <div class="label-group">
+                            <div class="label-title">Language Quality</div>
+                            <div class="label-options">
+                                <button class="label-btn" data-category="quality" data-value="clear">Clear</button>
+                                <button class="label-btn" data-category="quality" data-value="unclear">Unclear</button>
+                                <button class="label-btn" data-category="quality" data-value="spam">Spam</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" id="submitBtn">Submit Annotation</button>
+                        <button class="btn btn-secondary" id="skipBtn">Skip Item</button>
+                        <button class="btn btn-secondary" id="resetBtn">Reset Labels</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="tracker-card">
+                    <div class="tracker-title">Progress Tracker</div>
+                    <div class="progress-bar-container">
+                        <div class="progress-label">
+                            <span>Daily Target</span>
+                            <span id="progressText">0/50</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <div class="quality-metrics">
+                        <div class="metric-row">
+                            <span class="metric-label">Consistency:</span>
+                            <span class="metric-value good" id="consistencyScore">98%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Completion Rate:</span>
+                            <span class="metric-value good" id="completionRate">100%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="metric-label">Response Time:</span>
+                            <span class="metric-value" id="responseTime">32s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tracker-card">
+                    <div class="tracker-title">Recent Activity Log</div>
+                    <div class="annotation-log" id="activityLog">
+                        <div class="log-entry">
+                            <div class="log-time">System Ready</div>
+                            <div class="log-action">Waiting for first annotation...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="export-section">
+            <div class="export-title">Data Management & Export</div>
+            <div class="export-options">
+                <button class="btn btn-primary" id="exportExcelBtn">Export to Excel</button>
+                <button class="btn btn-secondary" id="exportJsonBtn">Export to JSON</button>
+                <button class="btn btn-secondary" id="viewReportBtn">Generate QA Report</button>
+                <button class="btn btn-secondary" id="clearDataBtn">Clear Session Data</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
